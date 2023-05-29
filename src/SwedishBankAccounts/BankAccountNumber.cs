@@ -33,7 +33,7 @@ public record BankAccountNumber
     /// <summary>
     /// Tries to parse a bank account number
     /// </summary>
-    /// <param name="value">The bank account number togethwer with its sorting number</param>
+    /// <param name="value">The bank account number together with its sorting number</param>
     /// <param name="bankAccountNumber">The parsed bank account number</param>
     /// <returns>True if parse is successful, otherwise false</returns>
     public static bool TryParse(string value, out BankAccountNumber? bankAccountNumber)
@@ -45,7 +45,7 @@ public record BankAccountNumber
     /// <summary>
     /// Tries to parse a bank account number
     /// </summary>
-    /// <param name="value">The bank account number togethwer with its sorting number</param>
+    /// <param name="value">The bank account number together with its sorting number</param>
     /// <param name="initOptions">Defines the strictness of the parsing </param>
     /// <param name="bankAccountNumber">The parsed bank account number</param>
     /// <returns>True if parse is successful, otherwise false</returns>
