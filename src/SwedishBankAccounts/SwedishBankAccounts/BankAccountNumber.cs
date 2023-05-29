@@ -16,12 +16,23 @@ public record BankAccountNumber
         AccountNumber = accountNumber;
     }
 
-    public bool TryParse(string value, InitOptions? initOptions, out BankAccountNumber? bankAccountNumber)
+    public static bool TryParse(string value, out BankAccountNumber? bankAccountNumber)
+    {
+        bankAccountNumber = null;
+        return TryParse(value, InitOptions.Strict, out bankAccountNumber);
+    }
+
+    public static bool TryParse(string value, InitOptions? initOptions, out BankAccountNumber? bankAccountNumber)
     {
         initOptions ??= InitOptions.Strict;
 
         bankAccountNumber = null;
         value = Regex.Replace(value, @"[^\d]", "");
+
+        if (value.StartsWith('8') && value.Length < 7) return false;
+        if(!value.StartsWith('8') && value.Length < 6) return false;
+
+        var test = value.Substring(0, value.StartsWith('8') ? 5 : 4);
 
         var sortingCode = value[..(value.StartsWith('8') ? 5 : 4)];
         var accountNumber = value[(value.StartsWith('8') ? 5 : 4)..];
