@@ -1,0 +1,25 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: [ '7.0.x' ]
+    name: Test dotnet ${{ matrix.dotnet-versions }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up dotnet.
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - name: Build
+        run: dotnet build
+      - name: Run test suite
+        run: dotnet test
