@@ -11,9 +11,17 @@ public class BankAccountNumberTests : UnitTests
     [InlineData("3300 000620-5124", "Nordea")]
     [InlineData("97891111113", "Klarna Bank")]
     [InlineData("9585, 612345740", "Aion Bank")]
-    [InlineData("9553-589436168", "Avanza Bank")]
+    [InlineData("9553-5894364", "Avanza Bank")]
     [InlineData("9683,143 579 155", "BlueStep Finans")]
+    [InlineData("9472,456 987 154", "BNP Paribas")]
+    [InlineData("9045,987 456 128", "Citibank")]
+    [InlineData("1255,6548711", "Danske Bank")]
+    [InlineData("9199,321 8647", "DNB Bank")]
+    [InlineData("9704,861 957 3564", "Ekobanken")]
+    [InlineData("9597 984 216 868", "Erik Penser")]
     [InlineData("9273-956 609 3", "ICA Banken")]
+    [InlineData("9178-516 4155", "IKANO Bank")]
+
     public void AccountNumber_TryParse_ShouldValidate(string accountNumber, string bankName)
     {
         BankAccountNumber.TryParse(accountNumber, out var bankAccountNumber)
