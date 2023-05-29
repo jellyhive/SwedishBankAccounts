@@ -32,14 +32,12 @@ public record BankAccountNumber
         if (value.StartsWith('8') && value.Length < 7) return false;
         if(!value.StartsWith('8') && value.Length < 6) return false;
 
-        var test = value.Substring(0, value.StartsWith('8') ? 5 : 4);
-
         var sortingCode = value[..(value.StartsWith('8') ? 5 : 4)];
         var accountNumber = value[(value.StartsWith('8') ? 5 : 4)..];
 
         if (sortingCode.Length is < 4 or > 4 && !Modulus10.Validate(sortingCode)) return false;
 
-        var bank = SwedishBankAccounts.Bank.Banks.SingleOrDefault(s => s.HasSortingCode(sortingCode));
+        var bank = SwedishBankAccounts.Bank.Banks.SingleOrDefault(s => s.HasSortingCode(sortingCode[..4]));
         if(bank == null) return false;
 
         var valid = bank.BankAccountNumberType.Validate(sortingCode, accountNumber);
