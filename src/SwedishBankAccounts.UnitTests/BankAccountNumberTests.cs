@@ -30,14 +30,23 @@ public class BankAccountNumberTests : UnitTests
     [InlineData("3400, 123 4645", "Länsförsäkringar Bank")]
     [InlineData("9060, 541 6877", "Länsförsäkringar Bank")]
     [InlineData("9234, 879 1554", "Marginalen Bank")]
-
     [InlineData("9646, 1230477", "Nordax Bank")]
     [InlineData("1150, 9743685", "Nordea")]
     [InlineData("4564, 154 1970", "Nordea")]
     [InlineData("9108 876 1587", "Nordnet Bank")]
     [InlineData("9752-6546873", "Northmill Bank")]
-
-
+    [InlineData("9280 689 1477", "Resurs Bank")]
+    [InlineData("9882 134 6325", "Riksgälden")]
+    [InlineData("9462 613 5412", "Santander Consumer Bank")]
+    [InlineData("9252 132 2148", "SBAB")]
+    [InlineData("5140 321 5642", "SEB")]
+    [InlineData("9160 741 6680", "Skandiabanken")]
+    [InlineData("9664 446 5511", "Svea Bank")]
+    [InlineData("9180 331 4218", "Danske Bank")]
+    [InlineData("9530 364 8748", "Nordea Plusgirot")]
+    [InlineData("9892 398 7468", "Riksgälden")]
+    [InlineData("9578 633 1128", "Sparbanken Syd")]
+    [InlineData("9340 321 4681", "Swedbank")]
     public void AccountNumber_TryParse_ShouldValidate(string accountNumber, string bankName)
     {
         BankAccountNumber.TryParse(accountNumber, out var bankAccountNumber)
