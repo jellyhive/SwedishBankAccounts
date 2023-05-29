@@ -1,3 +1,5 @@
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jellyhive/swedishbankaccounts/swedishbankaccounts.yml?branch=main)](https://github.com/jellyhive/swedishbankaccounts/actions)
+
 # Swedish Bank Account for C#
 
 This package validates and returns details about Swedish bank account numbers using C#/.NET. The details and validation rules are based on the documentation provided by Bankgirot, which can be found [here](https://www.bankgirot.se/globalassets/dokument/anvandarmanualer/bankernaskontonummeruppbyggnad_anvandarmanual_sv.pdf).
