@@ -3,10 +3,24 @@ using System.Text.RegularExpressions;
 
 namespace SwedishBankAccounts;
 
+/// <summary>
+/// Represents a bank account number
+/// </summary>
 public record BankAccountNumber
 {
+    /// <summary>
+    /// The name of the bank for the number
+    /// </summary>
     public string Bank { get; }
+
+    /// <summary>
+    /// The bank account number sorting code (clearing number)
+    /// </summary>
     public string SortingCode { get; }
+
+    /// <summary>
+    /// The actual bank account number
+    /// </summary>
     public string AccountNumber { get; }
 
     private BankAccountNumber(string bank, string sortingCode, string accountNumber)
@@ -16,12 +30,25 @@ public record BankAccountNumber
         AccountNumber = accountNumber;
     }
 
+    /// <summary>
+    /// Tries to parse a bank account number
+    /// </summary>
+    /// <param name="value">The bank account number togethwer with its sorting number</param>
+    /// <param name="bankAccountNumber">The parsed bank account number</param>
+    /// <returns>True if parse is successful, otherwise false</returns>
     public static bool TryParse(string value, out BankAccountNumber? bankAccountNumber)
     {
         bankAccountNumber = null;
         return TryParse(value, InitOptions.Strict, out bankAccountNumber);
     }
 
+    /// <summary>
+    /// Tries to parse a bank account number
+    /// </summary>
+    /// <param name="value">The bank account number togethwer with its sorting number</param>
+    /// <param name="initOptions">Defines the strictness of the parsing </param>
+    /// <param name="bankAccountNumber">The parsed bank account number</param>
+    /// <returns>True if parse is successful, otherwise false</returns>
     public static bool TryParse(string value, InitOptions? initOptions, out BankAccountNumber? bankAccountNumber)
     {
         initOptions ??= InitOptions.Strict;

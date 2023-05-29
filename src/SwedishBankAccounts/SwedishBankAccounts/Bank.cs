@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static System.Net.WebRequestMethods;
 
 namespace SwedishBankAccounts;
 
+/// <summary>
+/// Defines a bank
+/// </summary>
+/// <param name="Name">The name of the bank</param>
+/// <param name="SortingCodeRange">The ranges of sorting numbers used by the bank</param>
+/// <param name="BankAccountNumberType">The specific account number type used</param>
 public record Bank(string Name, Range[] SortingCodeRange, BankAccountNumberType BankAccountNumberType)
 {
+    /// <summary>
+    /// Returns a list of known Swedish banks
+    /// </summary>
     public static IEnumerable<Bank> Banks
     {
         get
