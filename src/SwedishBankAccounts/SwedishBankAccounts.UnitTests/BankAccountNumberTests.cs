@@ -10,6 +10,10 @@ public class BankAccountNumberTests : UnitTests
     [InlineData("8129-9,043 386 711-6", "Swedbank")]
     [InlineData("3300 000620-5124", "Nordea")]
     [InlineData("97891111113", "Klarna Bank")]
+    [InlineData("9585, 612345740", "Aion Bank")]
+    [InlineData("9553-589436168", "Avanza Bank")]
+    [InlineData("9683,143 579 155", "BlueStep Finans")]
+    [InlineData("9273-956 609 3", "ICA Banken")]
     public void AccountNumber_TryParse_ShouldValidate(string accountNumber, string bankName)
     {
         BankAccountNumber.TryParse(accountNumber, out var bankAccountNumber)
