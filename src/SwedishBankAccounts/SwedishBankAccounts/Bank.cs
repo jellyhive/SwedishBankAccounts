@@ -32,7 +32,7 @@ public record Bank(string Name, Range[] SortingCodeRange, BankAccountNumberType 
                 new Bank("Landshypotek", new[] { new Range(9390, 9399) }, new BankAccountNumberType1B()),
                 new Bank("Lunar Bank", new[] { new Range(9710, 9719) }, new BankAccountNumberType1B()),
                 new Bank("Lån & Spar Bank Sverige", new[] { new Range(9630, 9639) }, new BankAccountNumberType1A()),
-                new Bank("Länsförsäkringar Bank", new[] { new Range(3400, 3499), new Range(9060, 9069) }, new BankAccountNumberType1A()),
+                new Bank("Länsförsäkringar Bank", new[] { new Range(3400, 3409), new Range(9060, 9069) }, new BankAccountNumberType1A()),
                 new Bank("Länsförsäkringar Bank", new[] { new Range(9020, 9029) }, new BankAccountNumberType1B()),
                 new Bank("Marginalen Bank", new[] { new Range(9230, 9239) }, new BankAccountNumberType1B()),
                 new Bank("Multitude Bank", new[] { new Range(9070, 9079) }, new BankAccountNumberType1A()),
