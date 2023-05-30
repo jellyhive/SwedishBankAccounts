@@ -27,8 +27,8 @@ The `TryParse` method should contain an optional parameter InitOptions to define
 
 # Modulus10 Validation
 
-A static method for validating a BankAccountNumber according to Modulus10 should be included.
+A static method for validating a number according to the Modulus-10 method should be included.
 
 # Modulus11 Validation
 
-A static method for validating a BankAccountNumber according to Modulus11 should be included.
+A static method for validating a number according to the Modulus-11 method should be included.
