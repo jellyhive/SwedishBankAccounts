@@ -38,8 +38,10 @@ public record BankAccountNumber
     /// <returns>The parsed bank account number</returns>
     public static BankAccountNumber Parse(string value)
     {
-        TryParse(value, InitOptions.Strict, out var bankAccountNumber);
-        if (bankAccountNumber == null) throw new FormatException();
+        if(!TryParse(value, InitOptions.Strict, out var bankAccountNumber))
+        {
+            throw new FormatException("Invalid: " + nameof(value));
+        }
         return bankAccountNumber;
     }
     /// <summary>
@@ -50,8 +52,7 @@ public record BankAccountNumber
     /// <returns>The parsed bank account number</returns>
     public static BankAccountNumber Parse(string value, InitOptions initOptions)
     {
-        TryParse(value, initOptions, out var bankAccountNumber);
-        if (bankAccountNumber == null) throw new FormatException();
+        if (TryParse(value, initOptions, out var bankAccountNumber)) throw new FormatException("Invalid: " + nameof(value));
         return bankAccountNumber;
     }
 

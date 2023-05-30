@@ -14,23 +14,45 @@ this library on form input fields but do not prevent form submission if the
 account number is reported as invalid. A good idea would instead be a warning saying 
 "there is a chance this is not a valid bank account number you may want to double check."
 
-## Specification
+## Examples
 
-### TryParse Example
+### TryParse
 
 ```csharp
-
 using SwedishBankAccounts;
 
-// 
-SwedishBankAccounts.TryParse("8424-4,983 189 224-6", out var bankAccountNumber)
-// Returns true if successful, otherwise false
+class Test 
+{
+  public void BankAccountLogic() 
+  {
+      if(SwedishBankAccounts.TryParse("9071, 417 23 83", out var bankAccountNumber))
+      {
+          Console.Write(bankAccountNumber);         // 9071-4172383
+          Console.Write(bankAccountNumber.Bank);    // Multitude Bank
+      }
+  }
+}
 ```
+### Modulus Validation and Calculation
 
-### Modulus10 Validation
+```csharp
+using SwedishBankAccounts;
 
-A static method for validating a number according to the Modulus-10 method should be included.
+class Test 
+{
+  public void ModulusValidation() 
+  {
+      SwedishBankAccounts.Modulus10.Validate("12556548711")     // True
+      SwedishBankAccounts.Modulus10.Validate("12556548713")     // False
 
-### Modulus11 Validation
+      SwedishBankAccounts.Modulus11.Validate("90714172383")     // True
+      SwedishBankAccounts.Modulus11.Validate("90714172382")     // False
+  }
 
-A static method for validating a number according to the Modulus-11 method should be included.
+  public void ModulusCalculation()
+  {
+      SwedishBankAccounts.Modulus10.CalculateCheckDigit("1255654871")       // Returns 1
+      SwedishBankAccounts.Modulus11.CalculateCheckDigit("9071417238")       // Returns 3
+  }
+}
+```
