@@ -1,4 +1,6 @@
-﻿namespace SwedishBankAccounts;
+﻿using System.Linq;
+
+namespace SwedishBankAccounts;
 
 /// <summary>
 /// Handles validation and calculation of check digit accordning to the modulus-11 method
@@ -19,24 +21,8 @@ public static class Modulus11
     /// <returns>True if the number is valid according to to the modulus-11 method, otherwise false</returns>
     public static bool Validate(string number)
     {
-        var weight = 2;
-        var checksum = 0m;
-
-        for (var i = number.Length - 2; i > -1; i--)
-        {
-            var j = number[i] - 48;
-            if (j is < 0 or > 9) return false;
-
-            checksum += j * weight;
-            weight++;
-            if (weight > 10) weight = 1;
-        }
-
-        var control = number[^1] - 48;
-        if (control is < 0 or > 9) return false;
-
-        var result = checksum % 11;
-        return result == 0 && control == 0 || 11 - result == control;
+        var checkDigit = CalculateCheckDigit(number[..^1]);
+        return number.Last() - 48 == checkDigit;
     }
 
     /// <summary>
@@ -49,6 +35,7 @@ public static class Modulus11
     /// Note that if the product is equal to 1 and the check digit is 10, then the account
     /// number cannot be used as a basis of a modulus-11 account number and the method will then return -1
     /// </returns>
+    public static int CalculateCheckDigit(string number) => CalculateCheckDigit(long.Parse(number));
     public static int CalculateCheckDigit(long number)
     {
         var digits = number.ToString();
