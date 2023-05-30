@@ -71,27 +71,27 @@ public record Bank(string Name, Range[] SortingCodeRange, BankAccountNumberType 
                 new Bank("Svea Bank", new[] { new Range(9660, 9669) }, new BankAccountNumberType1B()),
                 new Bank("Swedbank", new[] { new Range(7000, 7999) }, new BankAccountNumberType1A()),
                 
-                new Bank("Danske Bank", new[] { new Range(9180, 9189) }, new BankAccountNumberType2A(10, 10)),
-                new Bank("Handelsbanken", new[] { new Range(6000, 6999) }, new BankAccountNumberType2B(8, 9)),
+                new Bank("Danske Bank", new[] { new Range(9180, 9189) }, new BankAccountNumberType2A()),
+                new Bank("Handelsbanken", new[] { new Range(6000, 6999) }, new BankAccountNumberType2B()),
                 new Bank("Nordea", new[]
                 {
                     new Range(3300, 3300),
                     new Range(3782, 3782)
-                }, new BankAccountNumberType2A(10, 10)),
+                }, new BankAccountNumberType2A()),
                 new Bank("Nordea Plusgirot", new[]
                 {
                     new Range(9500, 9549),
                     new Range(9960, 9969)
-                }, new BankAccountNumberType2C(2, 8)),
-                new Bank("Riksgälden", new[] { new Range(9890, 9899) }, new BankAccountNumberType2A(10, 10)),
-                new Bank("Sparbanken Syd", new[] { new Range(9570, 9579) }, new BankAccountNumberType2A(10, 10)),
+                }, new BankAccountNumberType2C()),
+                new Bank("Riksgälden", new[] { new Range(9890, 9899) }, new BankAccountNumberType2A()),
+                new Bank("Sparbanken Syd", new[] { new Range(9570, 9579) }, new BankAccountNumberType2A()),
                 new Bank("Swedbank", new[]
                 {
                     // Adding an extra 5-digit case to catch their 5 digit sorting codes
                     // Source: https://www.swedbank.se/privat/kort-och-betala/konton-for-in-och-utbetalningar/clearingnummer.html
                     new Range(8000, 8999)
-                }, new BankAccountNumberType2C(10, 10)), // Allowing 11 here in case clearingnumber is sent as the first four instead of the first five
-                new Bank("Swedbank", new[] { new Range(9300, 9349) }, new BankAccountNumberType2A(10, 10))
+                }, new BankAccountNumberType2C()), // Allowing 11 here in case clearingnumber is sent as the first four instead of the first five
+                new Bank("Swedbank", new[] { new Range(9300, 9349) }, new BankAccountNumberType2A())
             };
         }
     }
