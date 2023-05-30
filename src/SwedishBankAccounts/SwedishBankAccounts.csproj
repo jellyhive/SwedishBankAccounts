@@ -4,6 +4,42 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<Nullable>enable</Nullable>
 		<LangVersion>11.0</LangVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Swedish Bank Accounts</Title>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Authors>Jonas Wikström, Victor Nilsson</Authors>
+		<Company>JellyHive AB</Company>
+		<Description>Validation and and bank identification of Swedish bank account numbers</Description>
+		<PackageProjectUrl></PackageProjectUrl>
+		<RepositoryUrl>https://github.com/jellyhive/SwedishBankAccounts</RepositoryUrl>
+		<PackageTags>swedish;bankaccount;bank;account;validation</PackageTags>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="MinVer" Version="4.3.0">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>
