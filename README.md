@@ -25,4 +25,10 @@ The package should include a class that which should be the return value of `Par
 The class should include a static TryParse method that creates a new instance of the class.
 The `TryParse` method should contain an optional parameter InitOptions to define the strictness of the parsing. Strict parsing will be used as default.
 
-# Modulus Validation
+# Modulus10 Validation
+
+A static method for validating a BankAccountNumber according to Modulus10 should be included.
+
+# Modulus11 Validation
+
+A static method for validating a BankAccountNumber according to Modulus11 should be included.
