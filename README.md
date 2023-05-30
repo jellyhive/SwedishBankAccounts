@@ -24,3 +24,5 @@ The package should include a class that which should be the return value of `Par
 
 The class should include a static TryParse method that creates a new instance of the class.
 The `TryParse` method should contain an optional parameter InitOptions to define the strictness of the parsing. Strict parsing will be used as default.
+
+# Modulus Validation
