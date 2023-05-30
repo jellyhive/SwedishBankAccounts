@@ -1,4 +1,4 @@
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jellyhive/swedishbankaccounts/swedishbankaccounts.yml?branch=main)](https://github.com/jellyhive/swedishbankaccounts/actions)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jellyhive/swedishbankaccounts/csharp.yml?branch=main)](https://github.com/jellyhive/swedishbankaccounts/actions)
 
 # Swedish Bank Account for C#
 
@@ -13,3 +13,11 @@ digit) that are indistinguishable from validatable accounts. We recommend using
 this library on form input fields but do not prevent form submission if the
 account number is reported as invalid. A good idea would instead be a warning saying 
 "there is a chance this is not a valid bank account number you may want to double check."
+
+## Specification
+
+# Class
+
+# TryParse
+
+The class should include a static TryParse method.

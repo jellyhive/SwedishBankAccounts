@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SwedishBankAccounts;
@@ -28,6 +29,30 @@ public record BankAccountNumber
         Bank = bank;
         SortingCode = sortingCode;
         AccountNumber = accountNumber;
+    }
+
+    /// <summary>
+    /// Parses a bank account number
+    /// </summary>
+    /// <param name="value">The bank account number together with its sorting number</param>
+    /// <returns>The parsed bank account number</returns>
+    public static BankAccountNumber Parse(string value)
+    {
+        TryParse(value, InitOptions.Strict, out var bankAccountNumber);
+        if (bankAccountNumber == null) throw new FormatException();
+        return bankAccountNumber;
+    }
+    /// <summary>
+    /// Parses a bank account number
+    /// </summary>
+    /// <param name="value">The bank account number together with its sorting number</param>
+    /// <param name="initOptions">Defines the strictness of the parsing </param>
+    /// <returns>The parsed bank account number</returns>
+    public static BankAccountNumber Parse(string value, InitOptions initOptions)
+    {
+        TryParse(value, initOptions, out var bankAccountNumber);
+        if (bankAccountNumber == null) throw new FormatException();
+        return bankAccountNumber;
     }
 
     /// <summary>
