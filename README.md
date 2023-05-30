@@ -16,14 +16,16 @@ account number is reported as invalid. A good idea would instead be a warning sa
 
 ## Specification
 
-### Class
+### TryParse Example
 
-The package should include a class that which should be the return value of `Parse`
+```csharp
 
-### TryParse
+using SwedishBankAccounts;
 
-The class should include a static TryParse method that creates a new instance of the class.
-The `TryParse` method should contain an optional parameter InitOptions to define the strictness of the parsing. Strict parsing will be used as default.
+// 
+SwedishBankAccounts.TryParse("8424-4,983 189 224-6", out var bankAccountNumber)
+// Returns true if successful, otherwise false
+```
 
 ### Modulus10 Validation
 
