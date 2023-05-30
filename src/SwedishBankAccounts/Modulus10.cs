@@ -3,7 +3,7 @@
 namespace SwedishBankAccounts;
 
 /// <summary>
-/// Handles validation and calculation of check digit accordning to the modulus-10 method
+/// Handles validation and calculation of check digit according to the modulus-10 method
 /// </summary>
 public static class Modulus10
 {
