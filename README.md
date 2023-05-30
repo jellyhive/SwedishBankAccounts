@@ -16,19 +16,19 @@ account number is reported as invalid. A good idea would instead be a warning sa
 
 ## Specification
 
-# Class
+### Class
 
 The package should include a class that which should be the return value of `Parse`
 
-# TryParse
+### TryParse
 
 The class should include a static TryParse method that creates a new instance of the class.
 The `TryParse` method should contain an optional parameter InitOptions to define the strictness of the parsing. Strict parsing will be used as default.
 
-# Modulus10 Validation
+### Modulus10 Validation
 
 A static method for validating a number according to the Modulus-10 method should be included.
 
-# Modulus11 Validation
+### Modulus11 Validation
 
 A static method for validating a number according to the Modulus-11 method should be included.
