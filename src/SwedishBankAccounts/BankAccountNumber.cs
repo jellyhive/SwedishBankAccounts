@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SwedishBankAccounts;
@@ -31,9 +32,34 @@ public record BankAccountNumber
     }
 
     /// <summary>
+    /// Parses a bank account number
+    /// </summary>
+    /// <param name="value">The bank account number together with its sorting number</param>
+    /// <returns>The parsed bank account number</returns>
+    public static BankAccountNumber Parse(string value)
+    {
+        if(!TryParse(value, InitOptions.Strict, out var bankAccountNumber))
+        {
+            throw new FormatException("Invalid: " + nameof(value));
+        }
+        return bankAccountNumber;
+    }
+    /// <summary>
+    /// Parses a bank account number
+    /// </summary>
+    /// <param name="value">The bank account number together with its sorting number</param>
+    /// <param name="initOptions">Defines the strictness of the parsing </param>
+    /// <returns>The parsed bank account number</returns>
+    public static BankAccountNumber Parse(string value, InitOptions initOptions)
+    {
+        if (TryParse(value, initOptions, out var bankAccountNumber)) throw new FormatException("Invalid: " + nameof(value));
+        return bankAccountNumber;
+    }
+
+    /// <summary>
     /// Tries to parse a bank account number
     /// </summary>
-    /// <param name="value">The bank account number togethwer with its sorting number</param>
+    /// <param name="value">The bank account number together with its sorting number</param>
     /// <param name="bankAccountNumber">The parsed bank account number</param>
     /// <returns>True if parse is successful, otherwise false</returns>
     public static bool TryParse(string value, out BankAccountNumber? bankAccountNumber)
@@ -45,7 +71,7 @@ public record BankAccountNumber
     /// <summary>
     /// Tries to parse a bank account number
     /// </summary>
-    /// <param name="value">The bank account number togethwer with its sorting number</param>
+    /// <param name="value">The bank account number together with its sorting number</param>
     /// <param name="initOptions">Defines the strictness of the parsing </param>
     /// <param name="bankAccountNumber">The parsed bank account number</param>
     /// <returns>True if parse is successful, otherwise false</returns>
