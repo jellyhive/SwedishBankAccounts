@@ -1,4 +1,6 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jellyhive/swedishbankaccounts/csharp.yml?branch=main)](https://github.com/jellyhive/swedishbankaccounts/actions)
+[![NuGet](http://img.shields.io/nuget/v/SwedishBankAccounts.svg)](https://www.nuget.org/packages/SwedishBankAccounts/)
+[![Downloads](https://img.shields.io/nuget/dt/SwedishBankAccounts)](#)
 
 # Swedish Bank Account for C#
 

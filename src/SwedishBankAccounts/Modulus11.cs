@@ -21,7 +21,7 @@ public static class Modulus11
     /// <returns>True if the number is valid according to to the modulus-11 method, otherwise false</returns>
     public static bool Validate(string number)
     {
-        var checkDigit = CalculateCheckDigit(number[..^1]);
+        var checkDigit = CalculateCheckDigit(number.Substring(0, number.Length - 1));
         return number.Last() - 48 == checkDigit;
     }
 
