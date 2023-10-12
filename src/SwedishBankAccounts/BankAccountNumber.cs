@@ -81,8 +81,9 @@ public record BankAccountNumber
         bankAccountNumber = null;
         value = Regex.Replace(value, @"[^\d]", "");
 
+        if (value.Length > MaxAccountLength) return false;
         if (value.StartsWith("8") && value.Length < 7) return false;
-        if(!value.StartsWith("8") && value.Length < 6) return false;
+        if (!value.StartsWith("8") && value.Length < 6) return false;
 
         var sortingCode = value.Substring(0, value.StartsWith("8") ? 5 : 4);
         var accountNumber = value.Substring(value.StartsWith("8") ? 5 : 4);
@@ -90,7 +91,7 @@ public record BankAccountNumber
         if (sortingCode.Length is < 4 or > 4 && !Modulus10.Validate(sortingCode)) return false;
 
         var bank = SwedishBankAccounts.Bank.Banks.SingleOrDefault(s => s.HasSortingCode(sortingCode.Substring(0, 4)));
-        if(bank == null) return false;
+        if (bank == null) return false;
 
         var valid = bank.BankAccountNumberType.Validate(sortingCode, accountNumber);
         switch (valid)
@@ -103,4 +104,9 @@ public record BankAccountNumber
         bankAccountNumber = new BankAccountNumber(bank.Name, sortingCode, accountNumber);
         return true;
     }
+
+    /// <summary>
+    /// Maxlength of Bank Account Number
+    /// </summary>
+    private const int MaxAccountLength = 16;
 }
