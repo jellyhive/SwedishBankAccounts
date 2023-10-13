@@ -4,7 +4,7 @@ namespace SwedishBankAccounts.UnitTests;
 
 public class BankAccountNumberTests : UnitTests
 {
-    [Theory] 
+	[Theory] 
     [InlineData("9071, 417 23 83", "Multitude Bank")]
     [InlineData("6683764450808", "Handelsbanken")]
     [InlineData("8424-4,983 189 224-6", "Swedbank")]
@@ -47,12 +47,20 @@ public class BankAccountNumberTests : UnitTests
     [InlineData("9892 398 7468", "Riksgälden")]
     [InlineData("9578 633 1128", "Sparbanken Syd")]
     [InlineData("9340 321 4681", "Swedbank")]
-    public void AccountNumber_TryParse_ShouldValidate(string accountNumber, string bankName)
+	public void AccountNumber_TryParse_ShouldValidate(string accountNumber, string bankName)
     {
         BankAccountNumber.TryParse(accountNumber, out var bankAccountNumber)
             .Should().BeTrue($"it should be validated to {bankName}");
 
         bankAccountNumber.Should().NotBeNull($"it should be validated to {bankName}");
         bankAccountNumber!.Bank.Should().Be(bankName, $"it should be validated to {bankName}");
+    }
+
+    [Fact]
+    public void AccountNumner_TryParse_ShouldReturnFalse()
+    {
+	    BankAccountNumber.TryParse(Fixture.Create<string>(), out var bankAccountNumber).Should().BeFalse();
+
+        bankAccountNumber.Should().BeNull();
     }
 }

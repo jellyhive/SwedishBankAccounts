@@ -24,7 +24,12 @@ public record BankAccountNumber
     /// </summary>
     public string AccountNumber { get; }
 
-    private BankAccountNumber(string bank, string sortingCode, string accountNumber)
+    /// <summary>
+    /// Maxlength of Bank Account Number
+    /// </summary>
+    private const int AccountMaxLength = 16;
+
+	private BankAccountNumber(string bank, string sortingCode, string accountNumber)
     {
         Bank = bank;
         SortingCode = sortingCode;
@@ -81,7 +86,7 @@ public record BankAccountNumber
         bankAccountNumber = null;
         value = Regex.Replace(value, @"[^\d]", "");
 
-        if (value.Length > MaxAccountLength) return false;
+        if (value.Length > AccountMaxLength) return false;
         if (value.StartsWith("8") && value.Length < 7) return false;
         if (!value.StartsWith("8") && value.Length < 6) return false;
 
@@ -104,9 +109,4 @@ public record BankAccountNumber
         bankAccountNumber = new BankAccountNumber(bank.Name, sortingCode, accountNumber);
         return true;
     }
-
-    /// <summary>
-    /// Maxlength of Bank Account Number
-    /// </summary>
-    private const int MaxAccountLength = 16;
 }
