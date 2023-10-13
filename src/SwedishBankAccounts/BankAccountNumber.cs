@@ -24,11 +24,6 @@ public record BankAccountNumber
     /// </summary>
     public string AccountNumber { get; }
 
-    /// <summary>
-    /// Maxlength of Bank Account Number
-    /// </summary>
-    private const int AccountMaxLength = 16;
-
 	private BankAccountNumber(string bank, string sortingCode, string accountNumber)
     {
         Bank = bank;
@@ -81,12 +76,13 @@ public record BankAccountNumber
     /// <returns>True if parse is successful, otherwise false</returns>
     public static bool TryParse(string value, InitOptions? initOptions, out BankAccountNumber? bankAccountNumber)
     {
-        initOptions ??= InitOptions.Strict;
+		const int accountMaxLength = 15;
+		initOptions ??= InitOptions.Strict;
 
         bankAccountNumber = null;
         value = Regex.Replace(value, @"[^\d]", "");
 
-        if (value.Length > AccountMaxLength) return false;
+        if (value.Length > accountMaxLength) return false;
         if (value.StartsWith("8") && value.Length < 7) return false;
         if (!value.StartsWith("8") && value.Length < 6) return false;
 

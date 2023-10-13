@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SwedishBankAccounts.UnitTests;
+﻿namespace SwedishBankAccounts.UnitTests;
 
 public class BankAccountNumberTests : UnitTests
 {
@@ -47,7 +45,7 @@ public class BankAccountNumberTests : UnitTests
     [InlineData("9892 398 7468", "Riksgälden")]
     [InlineData("9578 633 1128", "Sparbanken Syd")]
     [InlineData("9340 321 4681", "Swedbank")]
-	public void AccountNumber_TryParse_ShouldValidate(string accountNumber, string bankName)
+	public void BankAccountNumber_TryParse_ShouldValidate(string accountNumber, string bankName)
     {
         BankAccountNumber.TryParse(accountNumber, out var bankAccountNumber)
             .Should().BeTrue($"it should be validated to {bankName}");
@@ -56,10 +54,13 @@ public class BankAccountNumberTests : UnitTests
         bankAccountNumber!.Bank.Should().Be(bankName, $"it should be validated to {bankName}");
     }
 
-    [Fact]
-    public void AccountNumner_TryParse_ShouldReturnFalse()
+    [Theory]
+    [InlineData("1234567890123456", InitOptions.Strict)]
+    [InlineData("9252 132 2149", InitOptions.Strict)]
+    [InlineData("9252 132 2149", InitOptions.Lax)]
+    public void BankAccountNumber_TryParse_ShouldNotValidate(string accountNumber, InitOptions initOptions)
     {
-	    BankAccountNumber.TryParse(Fixture.Create<string>(), out var bankAccountNumber).Should().BeFalse();
+	    BankAccountNumber.TryParse(accountNumber, initOptions ,out var bankAccountNumber).Should().BeFalse();
 
         bankAccountNumber.Should().BeNull();
     }
