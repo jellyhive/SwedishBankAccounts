@@ -27,7 +27,7 @@ public class BankAccountNumberTests : UnitTests
     [InlineData("9630, 6541128", "Lån & Spar Bank Sverige", InitOptions.Strict)]
     [InlineData("3400, 123 4645", "Länsförsäkringar Bank", InitOptions.Strict)]
     [InlineData("9060, 541 6877", "Länsförsäkringar Bank", InitOptions.Strict)]
-    [InlineData("9234, 879 1554", "Marginalen Bank", InitOptions.Strict)]
+    [InlineData("9234, 879 1552", "Marginalen Bank", InitOptions.Strict)]
     [InlineData("9646, 1230477", "Nordax Bank", InitOptions.Strict)]
     [InlineData("1150, 9743685", "Nordea", InitOptions.Strict)]
     [InlineData("4564, 154 1970", "Nordea", InitOptions.Strict)]
