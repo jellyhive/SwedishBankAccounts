@@ -403,3 +403,10 @@ _NCrunch_*
 *.crunch.xml
 nCrunchTemp_*
 *.ncrunchsolution
+
+# Claude files and directories
+CLAUDE.md
+.claude/
+
+# Project TODO lists
+.todos/
