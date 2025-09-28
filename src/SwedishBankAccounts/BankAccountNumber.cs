@@ -50,7 +50,7 @@ public record BankAccountNumber
     /// <returns>The parsed bank account number</returns>
     public static BankAccountNumber Parse(string value, InitOptions initOptions)
     {
-        return TryParse(value, initOptions, out var bankAccountNumber)
+        return !TryParse(value, initOptions, out var bankAccountNumber)
             ? throw new FormatException("Invalid: " + nameof(value))
             : bankAccountNumber!;
     }
@@ -63,7 +63,6 @@ public record BankAccountNumber
     /// <returns>True if parse is successful, otherwise false</returns>
     public static bool TryParse(string value, out BankAccountNumber? bankAccountNumber)
     {
-        bankAccountNumber = null;
         return TryParse(value, InitOptions.Strict, out bankAccountNumber);
     }
 
@@ -104,5 +103,81 @@ public record BankAccountNumber
 
         bankAccountNumber = new BankAccountNumber(bank.Name, sortingCode, accountNumber);
         return true;
+    }
+
+    /// <summary>
+    /// Returns a string representation of the bank account number using the default NUMERIC format
+    /// </summary>
+    /// <returns>String in format: {SortingCode}-{AccountNumber}</returns>
+    public override string ToString()
+    {
+        return ToString("N");
+    }
+
+    /// <summary>
+    /// Returns a string representation of the bank account number in the specified format
+    /// </summary>
+    /// <param name="format">The format string (N/NUMERIC, C/COMPACT, S/SORTINGCODE, A/ACCOUNTNUMBER, I/IBAN, P/PRETTY)</param>
+    /// <returns>Formatted string representation</returns>
+    /// <exception cref="FormatException">Thrown when format is invalid</exception>
+    public string ToString(string? format)
+    {
+        return ToString(format, null);
+    }
+
+    /// <summary>
+    /// Returns a string representation of the bank account number in the specified format
+    /// </summary>
+    /// <param name="format">The format string (N/NUMERIC, C/COMPACT, S/SORTINGCODE, A/ACCOUNTNUMBER, I/IBAN, P/PRETTY)</param>
+    /// <param name="formatProvider">Format provider (not used but required for IFormattable interface)</param>
+    /// <returns>Formatted string representation</returns>
+    /// <exception cref="FormatException">Thrown when format is invalid</exception>
+    public string ToString(string? format, IFormatProvider? formatProvider)
+    {
+        format = string.IsNullOrWhiteSpace(format) ? "N" : format.ToUpperInvariant();
+
+        return format switch
+        {
+            "N" or "NUMERIC" => $"{SortingCode}-{AccountNumber}",
+            "C" or "COMPACT" => $"{SortingCode}{AccountNumber}",
+            "S" or "SORTINGCODE" => SortingCode,
+            "A" or "ACCOUNTNUMBER" => AccountNumber,
+            "I" or "IBAN" => ToIban(),
+            "P" or "PRETTY" => ToPretty(),
+            _ => throw new FormatException($"Invalid format string: '{format}'. Valid formats are: N/NUMERIC, C/COMPACT, S/SORTINGCODE, A/ACCOUNTNUMBER, I/IBAN, P/PRETTY")
+        };
+    }
+
+    private string ToIban()
+    {
+        var accountDigits = $"{SortingCode}{AccountNumber}".PadRight(20, '0');
+        var checkDigits = CalculateIbanCheckDigits(accountDigits);
+        return $"SE{checkDigits:D2}{accountDigits}";
+    }
+
+    private static int CalculateIbanCheckDigits(string accountNumber)
+    {
+        var rearranged = $"{accountNumber}SE00";
+        var numericString = "";
+
+        foreach (var c in rearranged)
+        {
+            if (char.IsDigit(c))
+            {
+                numericString += c;
+            }
+            else
+            {
+                numericString += (c - 'A' + 10).ToString();
+            }
+        }
+
+        var remainder = Modulus97.Calculate(numericString);
+        return 98 - remainder;
+    }
+
+    private string ToPretty()
+    {
+        return $"{Bank} {SortingCode}-{AccountNumber}";
     }
 }

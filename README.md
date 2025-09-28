@@ -10,11 +10,11 @@ This repository is based on  [swantzter/kontonummer](https://github.com/swantzte
 
 ## Important Caveat
 
-Some bank account numbers that is impossible to validate (as they do not have a check
-digit) that are indistinguishable from validatable accounts. We recommend using
+Some bank account numbers are impossible to validate (as they do not have a check
+digit) and are indistinguishable from validatable accounts. We recommend using
 this library on form input fields but do not prevent form submission if the
-account number is reported as invalid. A good idea would instead be a warning saying 
-"there is a chance this is not a valid bank account number you may want to double check."
+account number is reported as invalid. A good idea would instead be a warning saying
+"there is a chance this is not a valid bank account number, you may want to double check."
 
 ## Examples
 
@@ -58,3 +58,40 @@ class Test
   }
 }
 ```
+
+### Formatting
+
+The library supports multiple output formats for bank account numbers:
+
+```csharp
+using SwedishBankAccounts;
+
+var bankAccount = BankAccountNumber.Parse("9071-4172383");
+
+// Default format (NUMERIC)
+Console.WriteLine(bankAccount.ToString());           // 9071-4172383
+Console.WriteLine(bankAccount.ToString("N"));       // 9071-4172383
+Console.WriteLine(bankAccount.ToString("NUMERIC")); // 9071-4172383
+
+// COMPACT format
+Console.WriteLine(bankAccount.ToString("C"));       // 90714172383
+Console.WriteLine(bankAccount.ToString("COMPACT")); // 90714172383
+
+// SORTINGCODE format
+Console.WriteLine(bankAccount.ToString("S"));           // 9071
+Console.WriteLine(bankAccount.ToString("SORTINGCODE")); // 9071
+
+// ACCOUNTNUMBER format
+Console.WriteLine(bankAccount.ToString("A"));             // 4172383
+Console.WriteLine(bankAccount.ToString("ACCOUNTNUMBER")); // 4172383
+
+// IBAN format
+Console.WriteLine(bankAccount.ToString("I"));    // SE8790714172383000000
+Console.WriteLine(bankAccount.ToString("IBAN")); // SE8790714172383000000
+
+// PRETTY format (with bank name)
+Console.WriteLine(bankAccount.ToString("P"));      // Multitude Bank 9071-4172383
+Console.WriteLine(bankAccount.ToString("PRETTY")); // Multitude Bank 9071-4172383
+```
+
+All format strings are case-insensitive. Invalid format strings will throw a `FormatException`.
