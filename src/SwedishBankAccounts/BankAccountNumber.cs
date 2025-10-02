@@ -134,9 +134,14 @@ public record BankAccountNumber
     /// <exception cref="FormatException">Thrown when format is invalid</exception>
     public string ToString(string? format, IFormatProvider? formatProvider)
     {
-        format = string.IsNullOrWhiteSpace(format) ? "N" : format.ToUpperInvariant();
+        var normalizedFormat = (format ?? "N").ToUpperInvariant();
 
-        return format switch
+        if (string.IsNullOrWhiteSpace(normalizedFormat))
+        {
+            normalizedFormat = "N";
+        }
+
+        return normalizedFormat switch
         {
             "N" or "NUMERIC" => $"{SortingCode}-{AccountNumber}",
             "C" or "COMPACT" => $"{SortingCode}{AccountNumber}",

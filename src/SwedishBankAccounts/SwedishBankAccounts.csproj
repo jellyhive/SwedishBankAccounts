@@ -4,6 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<LangVersion>11.0</LangVersion>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Title>Swedish Bank Accounts</Title>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
