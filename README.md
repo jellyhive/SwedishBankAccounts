@@ -23,11 +23,11 @@ account number is reported as invalid. A good idea would instead be a warning sa
 ```csharp
 using SwedishBankAccounts;
 
-class Test 
+class Test
 {
-  public void BankAccountLogic() 
+  public void BankAccountLogic()
   {
-      if(SwedishBankAccounts.TryParse("9071, 417 23 83", out var bankAccountNumber))
+      if(BankAccountNumber.TryParse("9071, 417 23 83", out var bankAccountNumber))
       {
           Console.Write(bankAccountNumber);         // 9071-4172383
           Console.Write(bankAccountNumber.Bank);    // Multitude Bank
@@ -95,3 +95,22 @@ Console.WriteLine(bankAccount.ToString("PRETTY")); // Multitude Bank 9071-417238
 ```
 
 All format strings are case-insensitive. Invalid format strings will throw a `FormatException`.
+
+### BIC/SWIFT Codes
+
+Many Swedish banks have BIC/SWIFT codes available in the library:
+
+```csharp
+using SwedishBankAccounts;
+
+// Get bank information including BIC/SWIFT code
+var bank = Bank.Banks.FirstOrDefault(b => b.Name == "Swedbank");
+Console.WriteLine(bank?.Bic); // SWEDSESS
+
+// Find bank by sorting code
+var sortingCode = "9550";
+var avanzaBank = Bank.Banks.FirstOrDefault(b => b.HasSortingCode(sortingCode));
+Console.WriteLine(avanzaBank?.Bic); // AVANSESX
+```
+
+BIC/SWIFT codes are available for major Swedish banks including Swedbank, Nordea, SEB, Handelsbanken, Danske Bank, Avanza, and many others.
