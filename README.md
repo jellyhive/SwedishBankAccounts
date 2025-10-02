@@ -27,10 +27,11 @@ class Test
 {
   public void BankAccountLogic()
   {
-      if(BankAccountNumber.TryParse("9071, 417 23 83", out var bankAccountNumber))
+      if(BankAccountNumber.TryParse("9553, 123 45 67", out var bankAccountNumber))
       {
-          Console.Write(bankAccountNumber);         // 9071-4172383
-          Console.Write(bankAccountNumber.Bank);    // Multitude Bank
+          Console.Write(bankAccountNumber);              // 9553-5894364
+          Console.Write(bankAccountNumber.Bank.Name);    // Avanza Bank
+          Console.Write(bankAccountNumber.Bank.Bic);     // AVANSESX
       }
   }
 }
@@ -66,51 +67,71 @@ The library supports multiple output formats for bank account numbers:
 ```csharp
 using SwedishBankAccounts;
 
-var bankAccount = BankAccountNumber.Parse("9071-4172383");
+var bankAccount = BankAccountNumber.Parse("9553-5894364");
 
 // Default format (NUMERIC)
-Console.WriteLine(bankAccount.ToString());           // 9071-4172383
-Console.WriteLine(bankAccount.ToString("N"));       // 9071-4172383
-Console.WriteLine(bankAccount.ToString("NUMERIC")); // 9071-4172383
+Console.WriteLine(bankAccount.ToString());           // 9553-5894364
+Console.WriteLine(bankAccount.ToString("N"));       // 9553-5894364
+Console.WriteLine(bankAccount.ToString("NUMERIC")); // 9553-5894364
 
 // COMPACT format
-Console.WriteLine(bankAccount.ToString("C"));       // 90714172383
-Console.WriteLine(bankAccount.ToString("COMPACT")); // 90714172383
+Console.WriteLine(bankAccount.ToString("C"));       // 95535894364
+Console.WriteLine(bankAccount.ToString("COMPACT")); // 95535894364
 
 // SORTINGCODE format
-Console.WriteLine(bankAccount.ToString("S"));           // 9071
-Console.WriteLine(bankAccount.ToString("SORTINGCODE")); // 9071
+Console.WriteLine(bankAccount.ToString("S"));           // 9553
+Console.WriteLine(bankAccount.ToString("SORTINGCODE")); // 9553
 
 // ACCOUNTNUMBER format
-Console.WriteLine(bankAccount.ToString("A"));             // 4172383
-Console.WriteLine(bankAccount.ToString("ACCOUNTNUMBER")); // 4172383
+Console.WriteLine(bankAccount.ToString("A"));             // 5894364
+Console.WriteLine(bankAccount.ToString("ACCOUNTNUMBER")); // 5894364
 
 // IBAN format
-Console.WriteLine(bankAccount.ToString("I"));    // SE8790714172383000000
-Console.WriteLine(bankAccount.ToString("IBAN")); // SE8790714172383000000
+Console.WriteLine(bankAccount.ToString("I"));    // SE8095535894364000000
+Console.WriteLine(bankAccount.ToString("IBAN")); // SE8095535894364000000
 
 // PRETTY format (with bank name)
-Console.WriteLine(bankAccount.ToString("P"));      // Multitude Bank 9071-4172383
-Console.WriteLine(bankAccount.ToString("PRETTY")); // Multitude Bank 9071-4172383
+Console.WriteLine(bankAccount.ToString("P"));      // Avanza Bank 9553-5894364
+Console.WriteLine(bankAccount.ToString("PRETTY")); // Avanza Bank 9553-5894364
 ```
 
 All format strings are case-insensitive. Invalid format strings will throw a `FormatException`.
 
-### BIC/SWIFT Codes
+### Bank Information and BIC/SWIFT Codes
 
-Many Swedish banks have BIC/SWIFT codes available in the library:
+The `Bank` property provides access to full bank information including BIC/SWIFT codes:
 
 ```csharp
 using SwedishBankAccounts;
 
-// Get bank information including BIC/SWIFT code
+var bankAccount = BankAccountNumber.Parse("9553-5894364");
+
+// Access bank information
+Console.WriteLine(bankAccount.Bank.Name);                    // Avanza Bank
+Console.WriteLine(bankAccount.Bank.Bic);                     // AVANSESX
+Console.WriteLine(bankAccount.Bank.SortingCodeRange.Length); // 1
+
+// Get bank information directly from Bank.Banks collection
 var bank = Bank.Banks.FirstOrDefault(b => b.Name == "Swedbank");
 Console.WriteLine(bank?.Bic); // SWEDSESS
 
 // Find bank by sorting code
-var sortingCode = "9550";
-var avanzaBank = Bank.Banks.FirstOrDefault(b => b.HasSortingCode(sortingCode));
-Console.WriteLine(avanzaBank?.Bic); // AVANSESX
+var sortingCode = "7000";
+var swedbankAccount = Bank.Banks.FirstOrDefault(b => b.HasSortingCode(sortingCode));
+Console.WriteLine(swedbankAccount?.Bic); // SWEDSESS
 ```
 
 BIC/SWIFT codes are available for major Swedish banks including Swedbank, Nordea, SEB, Handelsbanken, Danske Bank, Avanza, and many others.
+
+### Breaking Changes in v1.0.0
+
+**Important:** Starting from version 1.0.0, the `Bank` property returns a `Bank` object instead of a string:
+
+```csharp
+// v0.x.x (old way)
+string bankName = bankAccount.Bank;        // ❌ No longer works
+
+// v1.0.0+ (new way)
+string bankName = bankAccount.Bank.Name;   // ✅ Correct
+string bic = bankAccount.Bank.Bic;         // ✅ New: Access to BIC codes
+```
