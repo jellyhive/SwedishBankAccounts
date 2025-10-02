@@ -10,9 +10,9 @@ namespace SwedishBankAccounts;
 public record BankAccountNumber
 {
     /// <summary>
-    /// The name of the bank for the number
+    /// The bank for the number
     /// </summary>
-    public string Bank { get; }
+    public Bank Bank { get; }
 
     /// <summary>
     /// The bank account number sorting code (clearing number)
@@ -24,7 +24,7 @@ public record BankAccountNumber
     /// </summary>
     public string AccountNumber { get; }
 
-	private BankAccountNumber(string bank, string sortingCode, string accountNumber)
+	private BankAccountNumber(Bank bank, string sortingCode, string accountNumber)
     {
         Bank = bank;
         SortingCode = sortingCode;
@@ -101,7 +101,7 @@ public record BankAccountNumber
                 return false;
         }
 
-        bankAccountNumber = new BankAccountNumber(bank.Name, sortingCode, accountNumber);
+        bankAccountNumber = new BankAccountNumber(bank, sortingCode, accountNumber);
         return true;
     }
 
@@ -183,6 +183,6 @@ public record BankAccountNumber
 
     private string ToPretty()
     {
-        return $"{Bank} {SortingCode}-{AccountNumber}";
+        return $"{Bank.Name} {SortingCode}-{AccountNumber}";
     }
 }

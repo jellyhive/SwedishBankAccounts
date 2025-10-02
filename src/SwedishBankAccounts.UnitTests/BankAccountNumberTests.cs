@@ -11,7 +11,7 @@ public class BankAccountNumberTests : UnitTests
             .Should().BeTrue($"it should be validated to {bankName}");
 
         bankAccountNumber.Should().NotBeNull($"it should be validated to {bankName}");
-        bankAccountNumber!.Bank.Should().Be(bankName, $"it should be validated to {bankName}");
+        bankAccountNumber!.Bank.Name.Should().Be(bankName, $"it should be validated to {bankName}");
     }
 
     [Theory]
@@ -32,7 +32,7 @@ public class BankAccountNumberTests : UnitTests
         var result = BankAccountNumber.Parse(accountNumber, initOptions);
 
         result.Should().NotBeNull();
-        result.Bank.Should().Be(bankName);
+        result.Bank.Name.Should().Be(bankName);
     }
 
     [Theory]
