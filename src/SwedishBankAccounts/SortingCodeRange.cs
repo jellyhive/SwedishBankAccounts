@@ -1,6 +1,6 @@
 ﻿namespace SwedishBankAccounts;
 
-public record Range(int Min, int Max)
+public record SortingCodeRange(int Min, int Max, BankAccountNumberType BankAccountNumberType)
 {
     public bool IsInRange(int value) => value >= Min && value <= Max;
 }

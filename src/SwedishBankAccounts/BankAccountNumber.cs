@@ -90,14 +90,14 @@ public record BankAccountNumber
 
         if (sortingCode.Length is < 4 or > 4 && !Modulus10.Validate(sortingCode)) return false;
 
-        var bank = SwedishBankAccounts.Bank.Banks.SingleOrDefault(s => s.HasSortingCode(sortingCode.Substring(0, 4)));
-        if (bank == null) return false;
+        var (bank, sortingCodeRange) = Bank.FindBank(sortingCode);
+        if(bank == null || sortingCodeRange == null) return false;
 
-        var valid = bank.BankAccountNumberType.Validate(sortingCode, accountNumber);
+        var valid = sortingCodeRange.BankAccountNumberType.Validate(sortingCode, accountNumber);
         switch (valid)
         {
             case false when initOptions == InitOptions.Strict:
-            case false when bank.BankAccountNumberType is BankAccountNumberType1A or BankAccountNumberType1B:
+            case false when sortingCodeRange.BankAccountNumberType is BankAccountNumberType1A or BankAccountNumberType1B:
                 return false;
         }
 
