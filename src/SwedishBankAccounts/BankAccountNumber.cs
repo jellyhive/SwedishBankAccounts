@@ -90,14 +90,14 @@ public record BankAccountNumber
 
         if (sortingCode.Length is < 4 or > 4 && !Modulus10.Validate(sortingCode)) return false;
 
-        var bank = SwedishBankAccounts.Bank.Banks.SingleOrDefault(s => s.HasSortingCode(sortingCode.Substring(0, 4)));
-        if (bank == null) return false;
+        var (bank, sortingCodeRange) = Bank.FindBank(sortingCode.Substring(0, 4));
+        if(bank == null || sortingCodeRange == null) return false;
 
-        var valid = bank.BankAccountNumberType.Validate(sortingCode, accountNumber);
+        var valid = sortingCodeRange.BankAccountNumberType.Validate(sortingCode, accountNumber);
         switch (valid)
         {
             case false when initOptions == InitOptions.Strict:
-            case false when bank.BankAccountNumberType is BankAccountNumberType1A or BankAccountNumberType1B:
+            case false when sortingCodeRange.BankAccountNumberType is BankAccountNumberType1A or BankAccountNumberType1B:
                 return false;
         }
 
@@ -155,31 +155,11 @@ public record BankAccountNumber
 
     private string ToIban()
     {
-        var accountDigits = $"{SortingCode}{AccountNumber}".PadRight(20, '0');
-        var checkDigits = CalculateIbanCheckDigits(accountDigits);
-        return $"SE{checkDigits:D2}{accountDigits}";
+        var range = Bank.SortingCode(SortingCode.Substring(0, 4));
+        if (range == null) throw new InvalidOperationException("Cannot determine IBAN without a valid bank range");
+        return range.BankAccountNumberType.CreateIban(this);
     }
 
-    private static int CalculateIbanCheckDigits(string accountNumber)
-    {
-        var rearranged = $"{accountNumber}SE00";
-        var numericString = "";
-
-        foreach (var c in rearranged)
-        {
-            if (char.IsDigit(c))
-            {
-                numericString += c;
-            }
-            else
-            {
-                numericString += (c - 'A' + 10).ToString();
-            }
-        }
-
-        var remainder = Modulus97.Calculate(numericString);
-        return 98 - remainder;
-    }
 
     private string ToPretty()
     {

@@ -11,16 +11,15 @@ public class BankAccountNumberToStringIbanTests
     {
         var bankAccount = BankAccountNumber.Parse("9071-4172383");
         var result = bankAccount.ToString(format);
-
-        result.Should().StartWith("SE");
-        result.Length.Should().Be(24);
         result.Should().MatchRegex(@"^SE\d{22}$");
     }
 
     [Theory]
-    [InlineData("9071-4172383", "SE4890714172383000000000")]
-    [InlineData("6683764450808", "SE0866837644508080000000")]
-    [InlineData("3300 000620-5124", "SE9133000006205124000000")]
+    [InlineData("5140 321 5642", "SE8450000000051403215642")]
+    [InlineData("9160 741 6680", "SE5291500000091607416680")]
+    [InlineData("8424-4,983 189 224-6", "SE7680000842449831892246")]
+    [InlineData("6683764450808", "SE1360000000000764450808")]
+    [InlineData("9565-0000108", "SE4495500000095650000108")]
     public void ToString_IbanFormat_ShouldGenerateExpectedIban(string input, string expected)
     {
         var bankAccount = BankAccountNumber.Parse(input);

@@ -1,9 +1,9 @@
 ﻿namespace SwedishBankAccounts;
 
 /// <summary>
-/// Bank account number type 2B - Used for variable length account numbers with modulus-11 validation
+/// Bank account number type 2D - Used for modern digital banks with modulus-11 validation
 /// </summary>
-public record BankAccountNumberType2B : BankAccountNumberType
+public record BankAccountNumberType2D : BankAccountNumberType
 {
     /// <summary>
     /// Validates the account number using modulus-11 algorithm on the padded account number
@@ -12,12 +12,13 @@ public record BankAccountNumberType2B : BankAccountNumberType
     /// <param name="accountNumber">The account number to validate</param>
     /// <returns>True if the account number passes modulus-11 validation, otherwise false</returns>
     public override bool Validate(string sortingCode, string accountNumber) =>
-        Modulus11.Validate(accountNumber.PadLeft(9, '0'));
+        Modulus11.Validate(accountNumber.PadLeft(10, '0'));
 
     /// <summary>
-    /// Formats the account for IBAN generation using only the account number (excludes sorting code)
+    /// Formats the account for IBAN generation by concatenating sorting code and account number
     /// </summary>
     /// <param name="bankAccount">The bank account to format</param>
-    /// <returns>The account number only</returns>
-    protected override string FormatIban(BankAccountNumber bankAccount) => bankAccount.AccountNumber;
+    /// <returns>Concatenated sorting code and account number</returns>
+    protected override string FormatIban(BankAccountNumber bankAccount) =>
+        $"{bankAccount.SortingCode}{bankAccount.AccountNumber}";
 }
