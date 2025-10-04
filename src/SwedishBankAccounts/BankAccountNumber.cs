@@ -155,7 +155,7 @@ public record BankAccountNumber
 
     private string ToIban()
     {
-        var range = Bank.SortingCode(SortingCode);
+        var range = Bank.SortingCode(SortingCode.Substring(0, 4));
         if (range == null) throw new InvalidOperationException("Cannot determine IBAN without a valid bank range");
         return range.BankAccountNumberType.CreateIban(this);
     }
