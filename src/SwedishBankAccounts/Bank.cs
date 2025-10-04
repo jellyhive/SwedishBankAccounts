@@ -7,9 +7,9 @@ namespace SwedishBankAccounts;
 /// <summary>
 /// Defines a bank
 /// </summary>
+/// <param name="IbanId">The IBAN bank identifier code used in IBAN generation</param>
 /// <param name="Name">The name of the bank</param>
 /// <param name="SortingCodeRange">The ranges of sorting numbers used by the bank</param>
-/// <param name="BankAccountNumberType">The specific account number type used</param>
 /// <param name="Bic">The BIC/SWIFT code for the bank</param>
 public record Bank(
     string IbanId,
@@ -57,13 +57,13 @@ public record Bank(
                 ),
                 new Bank(
                     "214",
-                    "Trustly Group AB",
+                    "Trustly Group",
                     new[] { new SortingCodeRange(2140, 2149, new BankAccountNumberType1B()) },
                     "TRLYSESS"
                 ),
                 new Bank(
                     "215",
-                    "Revolut Bank UAB",
+                    "Revolut Bank",
                     new[] { new SortingCodeRange(2150, 2159, new BankAccountNumberType2D()) }
                 ),
                 new Bank(
@@ -309,7 +309,7 @@ public record Bank(
                 ),
                 new Bank(
                     "975",
-                    "Northmill AB",
+                    "Northmill Bank",
                     new[] { new SortingCodeRange(9750, 9759, new BankAccountNumberType1B()) },
                     "NOHLSESS"
                 ),
@@ -332,13 +332,32 @@ public record Bank(
         }
     }
 
+    /// <summary>
+    /// Determines whether this bank supports the specified sorting code
+    /// </summary>
+    /// <param name="sortingCode">The sorting code to check</param>
+    /// <returns>True if the bank supports the sorting code, otherwise false</returns>
     public bool HasSortingCode(string sortingCode) => SortingCode(sortingCode) != null;
 
+    /// <summary>
+    /// Gets the sorting code range that contains the specified sorting code
+    /// </summary>
+    /// <param name="sortingCode">The sorting code to find the range for</param>
+    /// <returns>The sorting code range if found, otherwise null</returns>
     public SortingCodeRange? SortingCode(string sortingCode) =>
         SortingCodeRange.FirstOrDefault(s => s.IsInRange(int.Parse(sortingCode)));
 
+    /// <summary>
+    /// Returns the bank name as string representation
+    /// </summary>
+    /// <returns>The name of the bank</returns>
     public override string ToString() => Name;
 
+    /// <summary>
+    /// Finds a bank and its sorting code range based on the given sorting code
+    /// </summary>
+    /// <param name="sortingCode">The sorting code to search for</param>
+    /// <returns>A tuple containing the bank and sorting code range, or null values if not found</returns>
     public static (Bank? Bank, SortingCodeRange? sortingCodeRange) FindBank(string sortingCode)
     {
         var bank = Banks.FirstOrDefault(b => b.HasSortingCode(sortingCode));

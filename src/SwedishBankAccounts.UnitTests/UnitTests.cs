@@ -54,6 +54,7 @@ public abstract class UnitTests
             new object[] { "9892 398 7468", "Riksgälden", InitOptions.Strict },
             new object[] { "9578 633 1128", "Sparbanken Syd", InitOptions.Strict },
             new object[] { "9340 321 4681", "Swedbank", InitOptions.Strict },
-            new object[] { "9340 321 4682", "Swedbank", InitOptions.Lax }
+            new object[] { "9340 321 4682", "Swedbank", InitOptions.Lax },
+            new object[] { "9565-0000012345", "Avanza Bank", InitOptions.Strict }
         };
 }

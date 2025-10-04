@@ -8,17 +8,17 @@ namespace SwedishBankAccounts;
 public static class Modulus10
 {
     /// <summary>
-    /// Validates the given number  according to to the modulus-10 method
+    /// Validates the given number according to the modulus-10 method
     /// </summary>
     /// <param name="number">The number to perform the validation upon</param>
-    /// <returns>True if the number is valid according to to the modulus-10 method, otherwise false</returns>
+    /// <returns>True if the number is valid according to the modulus-10 method, otherwise false</returns>
     public static bool Validate(long number) => Validate(number.ToString());
 
     /// <summary>
-    /// Validates the given number  according to to the modulus-10 method
+    /// Validates the given number according to the modulus-10 method
     /// </summary>
     /// <param name="number">The number to perform the validation upon</param>
-    /// <returns>True if the number is valid according to to the modulus-10 method, otherwise false</returns>
+    /// <returns>True if the number is valid according to the modulus-10 method, otherwise false</returns>
     public static bool Validate(string number)
     {
         var checkDigit = CalculateCheckDigit(number.Substring(0, number.Length - 1));
@@ -26,7 +26,7 @@ public static class Modulus10
     }
 
     /// <summary>
-    /// Calculates the check digit according to to the modulus-10 method
+    /// Calculates the check digit according to the modulus-10 method
     /// </summary>
     /// <param name="number">The number to calculate the modulus-10 check digit upon</param>
     /// <returns>
@@ -38,7 +38,7 @@ public static class Modulus10
     public static int CalculateCheckDigit(string number) => CalculateCheckDigit(long.Parse(number));
 
     /// <summary>
-    /// Calculates the check digit according to to the modulus-10 method
+    /// Calculates the check digit according to the modulus-10 method
     /// </summary>
     /// <param name="number">The number to calculate the modulus-10 check digit upon</param>
     /// <returns>
